@@ -7,6 +7,7 @@ const { sequelize, models } = require('./models');
 const { User, Course } = require('./models');
 const bcryptjs = require('bcryptjs');
 const auth = require('basic-auth');
+const cors = require('cors');
 
 //variable to enable global error logging
 const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
@@ -16,6 +17,9 @@ const app = express();
 
 //setup morgan which gives us http request logging
 app.use(morgan('dev'));
+
+//enable CORS requests
+app.use(cors());
 
 //enable access to req.body
 app.use(express.json());
