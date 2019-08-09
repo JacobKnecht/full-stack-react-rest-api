@@ -1,2 +1,2 @@
 # full-stack-react-rest-api
-an course management application using React and a REST API
+a course management application using React and a REST API
