@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch, Link } from 'react-router-dom';
+
+import Header from './components/Header';
+import NotFound from './components/NotFound';
 
 class App extends Component {
   state = {
@@ -24,19 +27,12 @@ class App extends Component {
       <BrowserRouter>
       <div id="root">
         <div>
-          {
-            this.state.courses.map(course => {
-              return (
-                <ul key={course.id}>
-                  <li>{course.id}</li>
-                  <li>{course.title}</li>
-                  <li>{course.description}</li>
-                  <li>{course.estimatedTime}</li>
-                  <li>{course.materialsNeeded}</li>
-                </ul>
-              );
-            })
-          }
+          <Header />
+          <hr />
+          <Switch>
+            {/*404/Not Found Route*/}
+            <Route component={NotFound} />
+          </Switch>
         </div>
       </div>
       </BrowserRouter>
