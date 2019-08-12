@@ -27,7 +27,12 @@ class App extends Component {
             {/*Course Details Route - Renders <CourseDetails> Component*/}
             <Route
               path="/courses/:id"
-              render={ () => <CourseDetail baseURL={this.state.baseURL} /> }
+              render={ props =>
+                <CourseDetail
+                  {...props}
+                  baseURL={this.state.baseURL}
+                />
+              }
             />
             {/*404/Not Found Route*/}
             <Route component={NotFound} />
