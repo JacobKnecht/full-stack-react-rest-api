@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class CourseDetails extends Component {
+class CourseDetail extends Component {
   state = {
     course: {},
   };
@@ -61,4 +61,4 @@ class CourseDetails extends Component {
   }
 }
 
-export default CourseDetails;
+export default CourseDetail;

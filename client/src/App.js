@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Redirect, Switch, Link } from 'react-router-dom';
 
 import Header from './components/Header';
 import Courses from './components/Courses';
-import CourseDetails from './components/CourseDetails';
+import CourseDetail from './components/CourseDetail';
 import NotFound from './components/NotFound';
 
 class App extends Component {
@@ -27,7 +27,7 @@ class App extends Component {
             {/*Course Details Route - Renders <CourseDetails> Component*/}
             <Route
               path="/courses/:id"
-              render={ () => <CourseDetails baseURL={this.state.baseURL} /> } 
+              render={ () => <CourseDetail baseURL={this.state.baseURL} /> }
             />
             {/*404/Not Found Route*/}
             <Route component={NotFound} />
