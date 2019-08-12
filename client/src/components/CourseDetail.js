@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 
 class CourseDetail extends Component {
   state = {
-    course: {},
+    course: "",
   };
 
   componentDidMount() {
     fetch(`${this.props.baseURL}/courses/${this.props.match.params.id}`)
       .then(response => response.json())
-      .then(course => this.setState({ course: course }))
+      .then(course => this.setState({ course: course[0] }))
       .then(() => console.log(this.state.course))
       .catch(err => console.log("There was an error loading the course: " + err))
   }
@@ -31,25 +31,25 @@ class CourseDetail extends Component {
         <div className="bounds course--detail">
           <div className="grid-66">
             <div className="course--header">
-              <h4 class="course--label">Course</h4>
-              <h3 class="course--title">{course.title}</h3>
-              <p>By {course.user.firstName} {course.user.lastName}</p>
+              <h4 className="course--label">Course</h4>
+              <h3 className="course--title">{this.state.course.title}</h3>
+              <p></p>
             </div>
-            <div class="course--description">
-              <p>{course.description}</p>
+            <div className="course--description">
+              <p>{this.state.course.description}</p>
             </div>
           </div>
-          <div class="grid-25 grid-right">
-            <div class="course--stats">
-              <ul class="course--stats--list">
-                <li class="course--stats--list--item">
+          <div className="grid-25 grid-right">
+            <div className="course--stats">
+              <ul className="course--stats--list">
+                <li className="course--stats--list--item">
                   <h4>Estimated Time</h4>
-                  <h3>{course.estimatedTime}</h3>
+                  <h3>{this.state.course.estimatedTime}</h3>
                 </li>
-                <li class="course--stats--list--item">
+                <li className="course--stats--list--item">
                   <h4>Materials Needed</h4>
                   <ul>
-                    <li>{course.materialsNeeded}</li>
+                    <li>{this.state.course.materialsNeeded}</li>
                   </ul>
                 </li>
               </ul>
