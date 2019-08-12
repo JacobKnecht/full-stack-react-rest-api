@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Redirect, Switch, Link } from 'react-router-dom';
 
 import Header from './components/Header';
 import Courses from './components/Courses';
+import CourseDetails from './components/CourseDetails';
 import NotFound from './components/NotFound';
 
 class App extends Component {
@@ -11,7 +12,7 @@ class App extends Component {
   }
 
   render() {
-    return this.state.isLoading ? (<h2>Loading Courses...</h2>) : (
+    return (
       <BrowserRouter>
       <div id="root">
         <div>
@@ -21,12 +22,12 @@ class App extends Component {
             {/*Homepage Route - Renders <Courses> Component/Courses List*/}
             <Route
               exact path="/"
-              render={ () =>
-                <Courses
-                  baseURL={this.state.baseURL}
-                  toggleLoad={this.toggleLoad}
-                />
-              }
+              render={ () => <Courses baseURL={this.state.baseURL} /> }
+            />
+            {/*Course Details Route - Renders <CourseDetails> Component*/}
+            <Route
+              path="/courses/:id"
+              render={ () => <CourseDetails baseURL={this.state.baseURL} /> } 
             />
             {/*404/Not Found Route*/}
             <Route component={NotFound} />
