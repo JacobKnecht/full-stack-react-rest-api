@@ -4,16 +4,12 @@ import { Link } from 'react-router-dom';
 class Courses extends Component {
   state = {
     courses: [],
-    isLoading: true,
   };
 
   componentDidMount() {
     fetch(`${this.props.baseURL}/courses`)
       .then(response => response.json())
-      .then(courses => this.setState({
-        courses: courses,
-        isLoading: false
-      }))
+      .then(courses => this.setState({ courses: courses }))
       .then(() => console.log(this.state.courses))
       .catch(err => console.log("There was an error loading the courses: " + err))
   }
