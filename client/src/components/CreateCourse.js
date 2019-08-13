@@ -14,11 +14,11 @@ class CreateCourse extends Component {
     window.location.assign("/");
   }
 
-  updateTitle(e) {
+  updateCourseTitle(e) {
     this.setState({ courseTitle: e.target.value });
   }
 
-  updateEstimatedTime(e) {
+  updateCourseEstimatedTime(e) {
     this.setState({ courseEstimatedTime: e.target.value });
   }
 
@@ -45,7 +45,7 @@ class CreateCourse extends Component {
                   <input id="title" name="title" type="text"
                     className="input-title course--title--input"
                     placeholder="Course title..." value={this.courseTitle}
-                    onChange={this.updateTitle}/>
+                    onChange={this.updateCourseTitle}/>
                 </div>
                 {/*Need to put authenticated user's name in the following <p> tag*/}
                 <p>By Enter Name</p>
@@ -65,7 +65,7 @@ class CreateCourse extends Component {
                     <div>
                       <input id="estimatedTime" name="estimatedTime" type="text"
                         className="course--time--input" placeholder="Hours"
-                        value={this.courseEstimatedTime} onChange={this.updateEstimatedTime} />
+                        value={this.courseEstimatedTime} onChange={this.updateCourseEstimatedTime} />
                     </div>
                   </li>
                   <li className="course--stats--list--item">
