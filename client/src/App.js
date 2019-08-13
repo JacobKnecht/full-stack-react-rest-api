@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
+import UserSignUp from './components/UserSignUp';
 import NotFound from './components/NotFound';
 
 class App extends Component {
@@ -35,8 +36,10 @@ class App extends Component {
                 />
               }
             />
-            {/*User Sign In Route*/}
+            {/*User Sign-In Route*/}
             <Route path="/signin" render={ () => <UserSignIn /> } />
+            {/*User Sign-Up Route*/}
+            <Route path="/signup" render={ () => <UserSignUp /> } />
             {/*404/Not Found Route*/}
             <Route component={NotFound} />
           </Switch>
