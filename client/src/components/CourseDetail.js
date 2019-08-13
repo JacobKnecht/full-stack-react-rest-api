@@ -49,6 +49,7 @@ class CourseDetail extends Component {
                 <li className="course--stats--list--item">
                   <h4>Materials Needed</h4>
                   <ul>
+                    {/*Need to find a way to break down materials needed lists*/}
                     <li>{this.state.course.materialsNeeded}</li>
                   </ul>
                 </li>
