@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Redirect, Switch, Link } from 'react-router-dom';
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
+import CreateCourse from './components/CreateCourse';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import NotFound from './components/NotFound';
@@ -21,12 +22,17 @@ class App extends Component {
           <Header />
           <hr />
           <Switch>
-            {/*Homepage Route - Renders <Courses> Component/Courses List*/}
+            {/*Homepage/Course List Route*/}
             <Route
               exact path="/"
               render={ () => <Courses baseURL={this.state.baseURL} /> }
             />
-            {/*Course Details Route - Renders <CourseDetails> Component*/}
+            {/*Create Course Route*/}
+            <Route
+              path="/courses/create"
+              render={ () => <CreateCourse baseURL={this.state.baseURL} /> }
+            />
+            {/*Course Details Route*/}
             <Route
               path="/courses/:id"
               render={ props =>
