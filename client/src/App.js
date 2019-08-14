@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect, Switch, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
 import CreateCourse from './components/CreateCourse';
+import UpdateCourse from './components/UpdateCourse';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import NotFound from './components/NotFound';
@@ -31,6 +32,16 @@ class App extends Component {
             <Route
               path="/courses/create"
               render={ () => <CreateCourse baseURL={this.state.baseURL} /> }
+            />
+            {/*Course Update Route*/}
+            <Route
+              path="/courses/:id/update"
+              render={ props =>
+                <UpdateCourse
+                  {...props}
+                  baseURL={this.state.baseURL}
+                />
+              }
             />
             {/*Course Details Route*/}
             <Route
