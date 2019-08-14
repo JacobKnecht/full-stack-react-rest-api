@@ -4,18 +4,23 @@ import { Link } from 'react-router-dom';
 class CourseDetail extends Component {
   state = {
     course: "",
+    isLoading: true,
   };
 
   componentDidMount() {
     fetch(`${this.props.baseURL}/courses/${this.props.match.params.id}`)
       .then(response => response.json())
-      .then(course => this.setState({ course: course[0] }))
+      .then(course => this.setState({
+        course: course[0],
+        isLoading: false
+      }))
       .then(() => console.log(this.state.course))
       .catch(err => console.log("There was an error loading the course: " + err))
   }
 
   render() {
     return (
+      this.state.isLoading ? (<h2>Loading Course Information...</h2>) :
       <div>
         <div className="actions--bar">
           <div className="bounds">
