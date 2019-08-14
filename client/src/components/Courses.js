@@ -14,7 +14,6 @@ class Courses extends Component {
         courses: courses,
         isLoading: false
       }))
-      .then(() => console.log(this.state.courses))
       .catch(err => console.log("There was an error loading the courses: " + err))
   }
 

@@ -16,7 +16,6 @@ class UpdateCourse extends Component {
         course: course[0],
         isLoading: false
       }))
-      .then(() => console.log(this.state.course.user.firstName))
       .catch(err => console.log("There was an error loading the course: " + err))
   }
 
