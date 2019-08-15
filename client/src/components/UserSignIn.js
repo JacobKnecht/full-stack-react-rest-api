@@ -4,8 +4,8 @@ import { withRouter } from 'react-router';
 
 class UserSignIn extends Component {
   state = {
-    userEmailAddress: "",
-    userPassword: "",
+    emailAddress: "",
+    password: "",
   };
 
   returnToList = (e) => {
@@ -13,22 +13,24 @@ class UserSignIn extends Component {
     this.props.history.push("/");
   }
 
-  updateUserEmailAddress(e) {
-    this.setState({ userEmailAddress: e.target.value });
+  updateUserEmailAddress = (e) => {
+    this.setState({ emailAddress: e.target.value });
   }
 
-  updateUserPassword(e) {
-    this.setState({ userPassword: e.target.value });
+  updateUserPassword = (e) => {
+    this.setState({ password: e.target.value });
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { context } = this.props;
-    context.actions.signIn(this.state.userEmailAddress, this.state.userPassword)
+    context.actions.signIn(this.state.emailAddress, this.state.password)
       .then(user => {
-        if(user === null) {
+        if(user !== null) {
           this.props.history.push("/");
-          console.log(`${this.state.userEmailAddress} succesfully signed in`);
+          console.log(`${this.state.emailAddress} succesfully signed in`);
+        } else {
+          this.props.history.push("/forbidden");
         }
       })
       .catch(err => {
@@ -46,12 +48,12 @@ class UserSignIn extends Component {
             <form onSubmit={this.handleSubmit}>
               <div>
                 <input id="emailAddress" name="emailAddress" type="text" className=""
-                  placeholder="Email Address" value={this.state.userEmailAddress}
-                  onChange={this.updateUserEmailAddres} />
+                  placeholder="Email Address" value={this.state.emailAddress}
+                  onChange={this.updateUserEmailAddress} />
               </div>
               <div>
                 <input id="password" name="password" type="password" className=""
-                  placeholder="Password" value={this.state.userPassword}
+                  placeholder="Password" value={this.state.password}
                   onChange={this.updateUserPassword} />
               </div>
               <div className="grid-100 pad-bottom">
