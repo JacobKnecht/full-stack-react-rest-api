@@ -12,6 +12,10 @@ import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
 import NotFound from './components/NotFound';
 
+import withContext from './components/Context';
+const UserSignInWithContext = withContext(UserSignIn);
+const UserSignUpWithContext = withContext(UserSignUp);
+
 class App extends Component {
   state = {
     baseURL: config.baseURL,
@@ -56,11 +60,11 @@ class App extends Component {
               }
             />
             {/*User Sign-In Route*/}
-            <Route path="/signin" render={ () => <UserSignIn /> } />
+            <Route path="/signin" component={UserSignInWithContext} />
             {/*User Sign-Up Route*/}
-            <Route path="/signup" render={ () => <UserSignUp /> } />
+            <Route path="/signup" component={UserSignUpWithContext} />
             {/*User Sign-Out Route*/}
-            <Route path="/signout" render={ () => <UserSignOut /> } />
+            <Route path="/signout" component={UserSignOut} />
             {/*404/Not Found Route*/}
             <Route component={NotFound} />
           </Switch>
