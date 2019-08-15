@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 class UserSignUp extends Component {
   state = {
@@ -7,11 +8,66 @@ class UserSignUp extends Component {
     userLastName: "",
     userEmailAddress: "",
     userPassword: "",
+    confirmationPassword: "",
+    errors: [],
   };
 
-  returnToList(e) {
+  returnToList = (e) => {
     e.preventDefault();
-    window.location.assign("/");
+    this.props.history.push("/");
+  }
+
+  updateUserFirstName(e) {
+    this.setState({ userFirst: e.target.value });
+  }
+
+  updateUserLastName(e) {
+    this.setState({ userLast: e.target.value });
+  }
+
+  updateUserEmailAddress(e) {
+    this.setState({ userEmailAddress: e.target.value });
+  }
+
+  updateUserPassword(e) {
+    this.setState({ userPassword: e.target.value });
+  }
+
+  updateConfirmationPassword(e) {
+    this.setState({ confirmationPassword: e.target.value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    if(this.state.userPassword === this.state.confirmationPassword) {
+      const { context } = this.props;
+      const {
+        userFirstName,
+        userLastName,
+        userEmailAddress,
+        userPassword
+      } = this.state;
+      context.actions.signUp({
+        userFirstName,
+        userLastName,
+        userEmailAddress,
+        userPassword
+      })
+        .then(errors => {
+          if(errors.length) {
+            this.setState({ errors });
+          } else {
+            this.props.history.push("/");
+            console.log(`${this.state.userFirstName} ${this.state.userLastName} succesfully signed up`);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.props.history.push("/error");
+        });
+    } else {
+      throw new Error();
+    }
   }
 
   render() {
@@ -20,26 +76,31 @@ class UserSignUp extends Component {
         <div className="grid-33 centered signin">
           <h1>Sign Up</h1>
           <div>
-            <form>
+            <form onSubmit={this.handleSubmit}>
               <div>
                 <input id="firstName" name="firstName" type="text" className=""
-                  placeholder="First Name" value="" />
+                  placeholder="First Name" value={this.state.userFirstName}
+                  onChange={this.updateUserFirstName} />
               </div>
               <div>
                 <input id="lastName" name="lastName" type="text" className=""
-                  placeholder="Last Name" value="" />
+                  placeholder="Last Name" value={this.state.userLastName}
+                  onChange={this.updateUserLastName} />
               </div>
               <div>
                 <input id="emailAddress" name="emailAddress" type="text" className=""
-                  placeholder="Email Address" value="" />
+                  placeholder="Email Address" value={this.state.userEmailAddress}
+                  onChange={this.updateUserEmailAddress} />
               </div>
               <div>
                 <input id="password" name="password" type="password" className=""
-                  placeholder="Password" value="" />
+                  placeholder="Password" value={this.state.userPassword}
+                  onChange={this.updateUserPassword} />
               </div>
               <div>
                 <input id="confirmPassword" name="confirmPassword" type="password"
-                  className="" placeholder="Confirm Password" value="" />
+                  className="" placeholder="Confirm Password" value={this.state.confirmationPassword}
+                  onChange={this.updateConfirmationPassword} />
               </div>
               <div className="grid-100 pad-bottom">
                 <button className="button" type="submit">Sign Up</button>
@@ -55,4 +116,4 @@ class UserSignUp extends Component {
   }
 }
 
-export default UserSignUp;
+export default withRouter(UserSignUp);
