@@ -43,7 +43,7 @@ class CreateCourse extends Component {
                 <div>
                   <input id="title" name="title" type="text"
                     className="input-title course--title--input"
-                    placeholder="Course title..." value={this.courseTitle}
+                    placeholder="Course title..." value={this.state.courseTitle}
                     onChange={this.updateCourseTitle}/>
                 </div>
                 {/*Need to put authenticated user's name in the following <p> tag*/}
@@ -64,7 +64,7 @@ class CreateCourse extends Component {
                     <div>
                       <input id="estimatedTime" name="estimatedTime" type="text"
                         className="course--time--input" placeholder="Hours"
-                        value={this.courseEstimatedTime} onChange={this.updateCourseEstimatedTime} />
+                        value={this.state.courseEstimatedTime} onChange={this.updateCourseEstimatedTime} />
                     </div>
                   </li>
                   <li className="course--stats--list--item">
