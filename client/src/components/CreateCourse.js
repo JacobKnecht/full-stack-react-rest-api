@@ -8,16 +8,16 @@ class CreateCourse extends Component {
     courseMaterialsNeeded: "",
   };
 
-  returnToList(e) {
+  returnToList = (e) => {
     e.preventDefault();
     window.location.assign("/");
   }
 
-  updateCourseTitle(e) {
+  updateCourseTitle = (e) => {
     this.setState({ courseTitle: e.target.value });
   }
 
-  updateCourseEstimatedTime(e) {
+  updateCourseEstimatedTime = (e) => {
     this.setState({ courseEstimatedTime: e.target.value });
   }
 

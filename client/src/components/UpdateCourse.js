@@ -19,20 +19,20 @@ class UpdateCourse extends Component {
       .catch(err => console.log("There was an error loading the course: " + err))
   }
 
-  returnToList(e) {
+  returnToList = (e) => {
     e.preventDefault();
     window.location.assign("/");
   }
 
-  updateCourseTitle(e) {
+  updateCourseTitle = (e) => {
     this.setState({ courseTitle: e.target.value });
   }
 
-  updateCourseDescription(e) {
+  updateCourseDescription = (e) => {
     this.setState({ courseTitle: e.target.value });
   }
 
-  updateCourseEstimatedTime(e) {
+  updateCourseEstimatedTime = (e) => {
     this.setState({ courseEstimatedTime: e.target.value });
   }
 
