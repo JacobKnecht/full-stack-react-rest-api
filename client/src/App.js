@@ -16,6 +16,7 @@ import Forbidden from './components/Forbidden';
 
 import { Provider } from './components/Context'
 import withContext from './components/Context';
+const HeaderWithContext = withContext(Header);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignUpWithContext = withContext(UserSignUp);
 
@@ -30,7 +31,7 @@ class App extends Component {
         <BrowserRouter>
         <div id="root">
           <div>
-            <Header />
+            <HeaderWithContext />
             <hr />
             <Switch>
               {/*Homepage/Course List Route*/}
