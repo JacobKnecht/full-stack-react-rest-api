@@ -13,6 +13,10 @@ import UserSignOut from './components/UserSignOut';
 import NotFound from './components/NotFound';
 
 class App extends Component {
+  state = {
+    baseURL: config.baseURL,
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -24,12 +28,12 @@ class App extends Component {
             {/*Homepage/Course List Route*/}
             <Route
               exact path="/"
-              render={ () => <Courses baseURL={config.baseURL} /> }
+              render={ () => <Courses baseURL={this.state.baseURL} /> }
             />
             {/*Create Course Route*/}
             <Route
               path="/courses/create"
-              render={ () => <CreateCourse baseURL={config.baseURL} /> }
+              render={ () => <CreateCourse baseURL={this.state.baseURL} /> }
             />
             {/*Course Update Route*/}
             <Route
@@ -37,7 +41,7 @@ class App extends Component {
               render={ props =>
                 <UpdateCourse
                   {...props}
-                  baseURL={config.baseURL}
+                  baseURL={this.state.baseURL}
                 />
               }
             />
@@ -47,7 +51,7 @@ class App extends Component {
               render={ props =>
                 <CourseDetail
                   {...props}
-                  baseURL={config.baseURL}
+                  baseURL={this.state.baseURL}
                 />
               }
             />
