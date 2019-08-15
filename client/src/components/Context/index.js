@@ -7,6 +7,7 @@ export class Provider extends Component {
   state = {};
 
   signUp = async (user) => {
+    console.log(user);
     const response = await fetch(`${config.baseURL}/users`, {
       method: "POST",
       headers: {
@@ -21,7 +22,7 @@ export class Provider extends Component {
         return data.errors;
       });
     } else {
-      throw new Error();
+      throw new Error("There was an error in the sign-up process -- signUp Provider method");
     }
   }
 
@@ -35,15 +36,15 @@ export class Provider extends Component {
       },
     });
     if(user.status === 200) {
-      return user.json.then(data => data);
+      return user.json().then(data => data);
     } else if(user.status === 401) {
       return null;
     } else {
-      throw new Error();
+      throw new Error("There was an error in the sign-in process -- signIn Provider method");
     }
   }
 
-  signOut() {}
+  signOut = () => {}
 
   render() {
     return (
@@ -51,6 +52,7 @@ export class Provider extends Component {
         authenticatedUser: "",
         actions: {
           signIn: this.signIn,
+          signUp: this.signUp,
         },
       }}>
         {this.props.children}
