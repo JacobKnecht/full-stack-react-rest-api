@@ -4,7 +4,9 @@ import config from '../../config'
 const UserContext = React.createContext();
 
 export class Provider extends Component {
-  state = {};
+  state = {
+    authenticatedUser: null,
+  };
 
   signUp = async (user) => {
     console.log(user);
@@ -49,7 +51,7 @@ export class Provider extends Component {
   render() {
     return (
       <UserContext.Provider value={{
-        authenticatedUser: "",
+        authenticatedUser: this.authenticatedUser,
         actions: {
           signIn: this.signIn,
           signUp: this.signUp,
