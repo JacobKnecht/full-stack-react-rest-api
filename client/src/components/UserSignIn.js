@@ -27,6 +27,8 @@ class UserSignIn extends Component {
     context.actions.signIn(this.state.emailAddress, this.state.password)
       .then(user => {
         if(user !== null) {
+          user.password = this.state.password;
+          context.actions.setAuthenticatedUser(user);
           this.props.history.push("/");
           console.log(`${this.state.emailAddress} succesfully signed in`);
         } else {
