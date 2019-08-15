@@ -4,10 +4,10 @@ import { withRouter } from 'react-router';
 
 class UserSignUp extends Component {
   state = {
-    userFirstName: "",
-    userLastName: "",
-    userEmailAddress: "",
-    userPassword: "",
+    firstName: "",
+    lastName: "",
+    emailAddress: "",
+    password: "",
     confirmationPassword: "",
     errors: [],
   };
@@ -17,48 +17,49 @@ class UserSignUp extends Component {
     this.props.history.push("/");
   }
 
-  updateUserFirstName(e) {
-    this.setState({ userFirst: e.target.value });
+  updateUserFirstName = (e) => {
+    this.setState({ firstName: e.target.value });
   }
 
-  updateUserLastName(e) {
-    this.setState({ userLast: e.target.value });
+  updateUserLastName = (e) => {
+    this.setState({ lastName: e.target.value });
   }
 
-  updateUserEmailAddress(e) {
-    this.setState({ userEmailAddress: e.target.value });
+  updateUserEmailAddress = (e) => {
+    this.setState({ emailAddress: e.target.value });
   }
 
-  updateUserPassword(e) {
-    this.setState({ userPassword: e.target.value });
+  updateUserPassword = (e) => {
+    this.setState({ password: e.target.value });
   }
 
-  updateConfirmationPassword(e) {
+  updateConfirmationPassword = (e) => {
     this.setState({ confirmationPassword: e.target.value });
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
-    if(this.state.userPassword === this.state.confirmationPassword) {
+    if(this.state.password === this.state.confirmationPassword) {
       const { context } = this.props;
       const {
-        userFirstName,
-        userLastName,
-        userEmailAddress,
-        userPassword
+        firstName,
+        lastName,
+        emailAddress,
+        password
       } = this.state;
       context.actions.signUp({
-        userFirstName,
-        userLastName,
-        userEmailAddress,
-        userPassword
+        firstName,
+        lastName,
+        emailAddress,
+        password
       })
         .then(errors => {
+          console.log(errors);
           if(errors.length) {
             this.setState({ errors });
           } else {
             this.props.history.push("/");
-            console.log(`${this.state.userFirstName} ${this.state.userLastName} succesfully signed up`);
+            console.log(`${this.state.firstName} ${this.state.lastName} successfully signed up`);
           }
         })
         .catch(err => {
@@ -66,7 +67,7 @@ class UserSignUp extends Component {
           this.props.history.push("/error");
         });
     } else {
-      throw new Error();
+      throw new Error("There was an error during the sign-up process -- sign-up form submission");
     }
   }
 
@@ -79,22 +80,22 @@ class UserSignUp extends Component {
             <form onSubmit={this.handleSubmit}>
               <div>
                 <input id="firstName" name="firstName" type="text" className=""
-                  placeholder="First Name" value={this.state.userFirstName}
+                  placeholder="First Name" value={this.state.firstName}
                   onChange={this.updateUserFirstName} />
               </div>
               <div>
                 <input id="lastName" name="lastName" type="text" className=""
-                  placeholder="Last Name" value={this.state.userLastName}
+                  placeholder="Last Name" value={this.state.lastName}
                   onChange={this.updateUserLastName} />
               </div>
               <div>
                 <input id="emailAddress" name="emailAddress" type="text" className=""
-                  placeholder="Email Address" value={this.state.userEmailAddress}
+                  placeholder="Email Address" value={this.state.emailAddress}
                   onChange={this.updateUserEmailAddress} />
               </div>
               <div>
                 <input id="password" name="password" type="password" className=""
-                  placeholder="Password" value={this.state.userPassword}
+                  placeholder="Password" value={this.state.password}
                   onChange={this.updateUserPassword} />
               </div>
               <div>
