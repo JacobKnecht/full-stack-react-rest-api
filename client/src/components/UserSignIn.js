@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 class UserSignIn extends Component {
   state = {
@@ -7,9 +8,33 @@ class UserSignIn extends Component {
     userPassword: "",
   };
 
-  returnToList(e) {
+  returnToList = (e) => {
     e.preventDefault();
-    window.location.assign("/");
+    this.props.history.push("/");
+  }
+
+  updateUserEmailAddress(e) {
+    this.setState({ userEmailAddress: e.target.value });
+  }
+
+  updateUserPassword(e) {
+    this.setState({ userPassword: e.target.value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const { context } = this.props;
+    context.actions.signIn(this.state.userEmailAddress, this.state.userPassword)
+      .then(user => {
+        if(user === null) {
+          this.props.history.push("/");
+          console.log(`${this.state.userEmailAddress} succesfully signed in`);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        this.props.history.push("/error");
+      });
   }
 
   render() {
@@ -18,14 +43,18 @@ class UserSignIn extends Component {
         <div className="grid-33 centered signin">
           <h1>Sign In</h1>
           <div>
-            <form>
+            <form onSubmit={this.handleSubmit}>
               <div>
-                <input id="emailAddress" name="emailAddress" type="text" className="" placeholder="Email Address" value="" />
+                <input id="emailAddress" name="emailAddress" type="text" className=""
+                  placeholder="Email Address" value={this.state.userEmailAddress}
+                  onChange={this.updateUserEmailAddres} />
               </div>
               <div>
-                <input id="password" name="password" type="password" className="" placeholder="Password" value="" />
+                <input id="password" name="password" type="password" className=""
+                  placeholder="Password" value={this.state.userPassword}
+                  onChange={this.updateUserPassword} />
               </div>
-              <div class="grid-100 pad-bottom">
+              <div className="grid-100 pad-bottom">
                 <button className="button" type="submit">Sign In</button>
                 <button className="button button-secondary" onClick={this.returnToList}>Cancel</button>
               </div>
@@ -39,4 +68,4 @@ class UserSignIn extends Component {
   }
 }
 
-export default UserSignIn;
+export default withRouter(UserSignIn);
