@@ -13,16 +13,17 @@ const PrivateRoute = (props) => {
         context => (
           <Route
             {...rest}
-            render={props => context.authenticatedUser ?
-              (<Component {...props} />)
-              :
-              <Redirect
-                to={{
-                  pathname: 'signin',
-                  state: { from: props.location }
-                }}
-              />
-            )}
+            render={props =>
+              context.authenticatedUser ?
+                (<Component {...props} />)
+                :
+                (<Redirect
+                  to={{
+                    pathname: '/signin',
+                    state: { from: props.location }
+                  }}
+                />)
+            }
           />
       )}
     </Consumer>
