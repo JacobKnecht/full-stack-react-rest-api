@@ -45,7 +45,9 @@ export class Provider extends Component {
     }
   }
 
-  signOut = () => {}
+  signOut = () => {
+    this.setState({ authenticatedUser: null });
+  }
 
   setAuthenticatedUser = (authUser) => {
     this.setState({ authenticatedUser: authUser });
@@ -56,8 +58,9 @@ export class Provider extends Component {
       <UserContext.Provider value={{
         authenticatedUser: this.state.authenticatedUser,
         actions: {
-          signIn: this.signIn,
           signUp: this.signUp,
+          signIn: this.signIn,
+          signOut: this.signOut,
           setAuthenticatedUser: this.setAuthenticatedUser,
         },
       }}>
