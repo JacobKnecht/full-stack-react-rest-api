@@ -23,7 +23,10 @@ class UpdateCourse extends Component {
         materialsNeeded: course[0].materialsNeeded,
         isLoading: false
       }))
-      .catch(err => console.log("There was an error loading the course: " + err))
+      .catch(err => {
+        console.log(err);
+        this.props.history.push("/error");
+      })
   }
 
   returnToList = (e) => {
@@ -77,7 +80,7 @@ class UpdateCourse extends Component {
     } else {
       console.log(response);
       console.log(response.status);
-      this.props.history.push("/error");
+      this.props.history.push("/forbidden");
     }
   }
 

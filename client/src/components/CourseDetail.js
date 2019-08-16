@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 class CourseDetail extends Component {
   state = {
@@ -14,7 +15,10 @@ class CourseDetail extends Component {
         course: course[0],
         isLoading: false
       }))
-      .catch(err => console.log("There was an error loading the course: " + err))
+      .catch(err => {
+        console.log(err);
+        this.props.history.push("/error");
+      })
   }
 
   render() {
@@ -66,4 +70,4 @@ class CourseDetail extends Component {
   }
 }
 
-export default CourseDetail;
+export default withRouter(CourseDetail);
