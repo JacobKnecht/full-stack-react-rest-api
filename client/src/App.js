@@ -4,25 +4,26 @@ import config from './config';
 
 import Header from './components/Header';
 import Courses from './components/Courses';
-import CourseDetail from './components/CourseDetail';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
-import UserSignIn from './components/UserSignIn';
+import CourseDetail from './components/CourseDetail';
 import UserSignUp from './components/UserSignUp';
+import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
-import NotFound from './components/NotFound';
 import UnhandledError from './components/UnhandledError';
 import Forbidden from './components/Forbidden';
+import NotFound from './components/NotFound';
 
 import { Provider } from './components/Context';
 import PrivateRoute from './PrivateRoute';
 
 import withContext from './components/Context';
 const HeaderWithContext = withContext(Header);
-const UserSignInWithContext = withContext(UserSignIn);
-const UserSignUpWithContext = withContext(UserSignUp);
 const CreateCourseWithContext = withContext(CreateCourse);
 const UpdateCourseWithContext = withContext(UpdateCourse);
+const UserSignUpWithContext = withContext(UserSignUp);
+const UserSignInWithContext = withContext(UserSignIn);
+const UserSignOutWithContext = withContext(UserSignOut);
 
 class App extends Component {
   state = {
@@ -64,12 +65,12 @@ class App extends Component {
                   />
                 }
               />
-              {/*User Sign-In Route*/}
-              <Route path="/signin" component={UserSignInWithContext} />
               {/*User Sign-Up Route*/}
               <Route path="/signup" component={UserSignUpWithContext} />
+              {/*User Sign-In Route*/}
+              <Route path="/signin" component={UserSignInWithContext} />
               {/*User Sign-Out Route*/}
-              <Route path="/signout" component={UserSignOut} />
+              <Route path="/signout" component={UserSignOutWithContext} />
               {/*Unhandled Error Route*/}
               <Route path="/error" component={UnhandledError} />
               {/*Forbidden/Unauthorized Route*/}
