@@ -67,7 +67,7 @@ class UserSignUp extends Component {
           this.props.history.push("/error");
         });
     } else {
-      throw new Error("There was an error during the sign-up process -- sign-up form submission");
+      throw new Error("Password not confirmed - please ensure passwords match");
     }
   }
 
