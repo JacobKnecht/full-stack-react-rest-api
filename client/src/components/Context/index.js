@@ -9,7 +9,6 @@ export class Provider extends Component {
   };
 
   signUp = async (user) => {
-    console.log(user);
     const response = await fetch(`${config.baseURL}/users`, {
       method: "POST",
       headers: {
