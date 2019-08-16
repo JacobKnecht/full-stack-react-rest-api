@@ -24,12 +24,13 @@ class UserSignIn extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { context } = this.props;
+    const { from } = this.props.location.state || { from: { pathname: "/" } };
     context.actions.signIn(this.state.emailAddress, this.state.password)
       .then(user => {
         if(user !== null) {
           user.password = this.state.password;
           context.actions.setAuthenticatedUser(user);
-          this.props.history.push("/");
+          this.props.history.push(from);
           console.log(`${this.state.emailAddress} successfully signed in`);
         } else {
           this.props.history.push("/forbidden");
