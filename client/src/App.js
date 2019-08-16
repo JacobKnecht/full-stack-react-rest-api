@@ -14,11 +14,15 @@ import NotFound from './components/NotFound';
 import UnhandledError from './components/UnhandledError';
 import Forbidden from './components/Forbidden';
 
-import { Provider } from './components/Context'
+import { Provider } from './components/Context';
+import PrivateRoute from './PrivateRoute';
+
 import withContext from './components/Context';
 const HeaderWithContext = withContext(Header);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignUpWithContext = withContext(UserSignUp);
+const CreateCourseWithContext = withContext(CreateCourse);
+const UpdateCourseWithContext = withContext(UpdateCourse);
 
 class App extends Component {
   state = {
@@ -40,19 +44,15 @@ class App extends Component {
                 render={ () => <Courses baseURL={this.state.baseURL} /> }
               />
               {/*Create Course Route*/}
-              <Route
+              <PrivateRoute
                 path="/courses/create"
-                render={ () => <CreateCourse baseURL={this.state.baseURL} /> }
+                component={CreateCourseWithContext}
+                baseURL={this.state.baseURL}
               />
               {/*Course Update Route*/}
-              <Route
+              <PrivateRoute
                 path="/courses/:id/update"
-                render={ props =>
-                  <UpdateCourse
-                    {...props}
-                    baseURL={this.state.baseURL}
-                  />
-                }
+                component={UpdateCourseWithContext}
               />
               {/*Course Details Route*/}
               <Route
