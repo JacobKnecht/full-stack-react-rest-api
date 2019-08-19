@@ -21,6 +21,7 @@ import withContext from './components/Context';
 const HeaderWithContext = withContext(Header);
 const CreateCourseWithContext = withContext(CreateCourse);
 const UpdateCourseWithContext = withContext(UpdateCourse);
+const CourseDetailWithContext = withContext(CourseDetail);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignOutWithContext = withContext(UserSignOut);
@@ -59,7 +60,7 @@ class App extends Component {
               <Route
                 path="/courses/:id"
                 render={ props =>
-                  <CourseDetail
+                  <CourseDetailWithContext
                     {...props}
                     baseURL={this.state.baseURL}
                   />
