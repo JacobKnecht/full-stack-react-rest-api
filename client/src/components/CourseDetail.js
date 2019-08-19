@@ -21,17 +21,40 @@ class CourseDetail extends Component {
       })
   }
 
+  handleDelete = () => {
+    const options = { method: "DELETE" };
+    fetch(`${this.props.baseURL}/courses/${this.state.course.id}`, options)
+      .then(response => {
+        if(response.status === 401) {
+          this.props.history.push("/forbidden");
+        } else {
+          console.log(`Course ${this.state.course.title} successfully deleted`);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        this.props.history.push("/error");
+      });
+  }
+
   render() {
+    const { context} = this.props;
+    const authUser = context.authenticatedUser;
     return (
       this.state.isLoading ? (<h2>Loading Course Information...</h2>) :
       <div>
         <div className="actions--bar">
           <div className="bounds">
             <div className="grid-100">
-              <span>
-                <Link to={`/courses/${this.state.course.id}/update`} className="button">Update Course</Link>
-                <Link to="#" className="button">Delete Course</Link>
-              </span>
+              {
+                (authUser && authUser.id === this.state.course.user.id) &&
+                <span>
+                  <Link to={`/courses/${this.state.course.id}/update`}
+                    className="button">Update Course</Link>
+                  <Link to="/" className="button"
+                    onClick={this.handleDelete}>Delete Course</Link>
+                </span>
+              }
               <Link to="/" className="button button-secondary">Return to List</Link>
             </div>
           </div>
