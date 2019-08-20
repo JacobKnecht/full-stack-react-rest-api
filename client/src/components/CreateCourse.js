@@ -58,14 +58,10 @@ class CreateCourse extends Component {
     });
     if(response.status === 201) {
       this.props.history.push("/");
-      console.log("Course Created");
     } else if(response.status === 400) {
       const data = await response.json();
       this.setState({ errors: data.message.split(",") });
-      //const errorMessages = data.message.split(",");
     } else {
-      console.log(response);
-      console.log(response.status);
       this.props.history.push("/error");
     }
   }

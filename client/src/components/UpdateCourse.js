@@ -10,6 +10,7 @@ class UpdateCourse extends Component {
     estimatedTime: "",
     materialsNeeded: "",
     isLoading: true,
+    errors: [],
   };
 
   componentDidMount() {
@@ -76,21 +77,37 @@ class UpdateCourse extends Component {
     });
     if(response.status === 204) {
       this.props.history.push("/");
-      console.log("Course Updated");
+    } else if(response.status === 400) {
+      const data = await response.json();
+      this.setState({ errors: data.message.split(",") });
     } else {
-      console.log(response);
-      console.log(response.status);
       this.props.history.push("/forbidden");
     }
   }
 
   render() {
+    let id = 1;
     const { firstName, lastName} = this.props.context.authenticatedUser;
     return (
       this.state.isLoading ? (<h2>Loading Course Information...</h2>) :
       <div className="bounds course--detail">
         <h1>Update Course</h1>
         <div>
+          {
+            (this.state.errors.length > 0) &&
+            <div>
+              <h2 className="validation--errors--label">Validation errors</h2>
+              <div className="validation-errors">
+                <ul>
+                  {
+                    (this.state.errors.map(error => {
+                      return (<li key={id++}>{error}</li>);
+                    }))
+                  }
+                </ul>
+              </div>
+            </div>
+          }
           <form onSubmit={this.handleSubmit}>
             <div className="grid-66">
               <div className="course--header">
