@@ -10,33 +10,33 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'User.firstName property is required' },
+        notEmpty: { msg: `'First Name' field requires input` },
       },
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'User.lastName property is required' },
+        notEmpty: { msg: `'Last Name' field requires input` },
       },
     },
     emailAddress: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isEmail: { msg: 'User.emailAddress property must be a valid email address' },
-        notEmpty: { msg: 'User.emailAddress property is required' },
+        isEmail: { msg: `'Email address' field requires a properly formatted email address (Ex. abc@example.com)` },
+        notEmpty: { msg: `'Email Address' field requires input` },
       },
       unique: {
         args: true,
-        msg: 'User.emailAddress property must be unique to each user'
+        msg: `'Email Address' field requires a unique email address`,
       },
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'User.password property is required' },
+        notEmpty: { msg: `'Password' field requires input` },
       },
     }
   }, {});
