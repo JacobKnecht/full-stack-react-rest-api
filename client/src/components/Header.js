@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 const Header = (props) => {
   const { context } = props;
@@ -18,7 +19,13 @@ const Header = (props) => {
             :
             <React.Fragment>
               <NavLink to="/signup" className="signup">Sign Up</NavLink>
-              <NavLink to="/signin" className="signin">Sign In</NavLink>
+              <NavLink to={
+                {
+                  pathname: "/signin",
+                  state: { from: props.location },
+                }
+              }
+              className="signin">Sign In</NavLink>
             </React.Fragment>
           }
         </nav>
@@ -27,4 +34,4 @@ const Header = (props) => {
   );
 }
 
-export default Header;
+export default withRouter(Header);
