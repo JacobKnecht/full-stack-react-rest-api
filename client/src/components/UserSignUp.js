@@ -9,6 +9,7 @@ class UserSignUp extends Component {
     emailAddress: "",
     password: "",
     confirmationPassword: "",
+    isConfirmed: false,
     errors: [],
   };
 
@@ -29,60 +30,75 @@ class UserSignUp extends Component {
     this.setState({ emailAddress: e.target.value });
   }
 
-  updateUserPassword = (e) => {
-    this.setState({ password: e.target.value });
+  updateUserPassword = async (e) => {
+    await this.setState({ password: e.target.value });
+    if(this.state.confirmationPassword === this.state.password) {
+      this.setState({ isConfirmed: true });
+    } else {
+      this.setState({ isConfirmed: false });
+    }
   }
 
-  updateConfirmationPassword = (e) => {
-    this.setState({ confirmationPassword: e.target.value });
+  updateConfirmationPassword = async (e) => {
+    await this.setState({ confirmationPassword: e.target.value });
+    if(this.state.confirmationPassword === this.state.password) {
+      this.setState({ isConfirmed: true });
+    } else {
+      this.setState({ isConfirmed: false });
+    }
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if(this.state.password === this.state.confirmationPassword) {
-      const { context } = this.props;
-      const {
-        firstName,
-        lastName,
-        emailAddress,
-        password
-      } = this.state;
-      context.actions.signUp({
-        firstName,
-        lastName,
-        emailAddress,
-        password
+    const { context } = this.props;
+    const { firstName, lastName, emailAddress, password } = this.state;
+    context.actions.signUp({ firstName, lastName, emailAddress, password })
+      .then(errors => {
+        if(errors.length) {
+          this.setState({ errors });
+        } else {
+          context.actions.signIn(emailAddress, password)
+            .then(user => {
+              this.props.history.push("/");
+              console.log(`${user.firstName} ${user.lastName} successfully signed up`);
+            })
+            .catch(err => {
+              console.log(err);
+              this.props.history.push("/forbidden");
+            })
+        }
       })
-        .then(errors => {
-          console.log(errors);
-          if(errors.length) {
-            this.setState({ errors });
-          } else {
-            context.actions.signIn(emailAddress, password)
-              .then(user => {
-                this.props.history.push("/");
-                console.log(`${user.firstName} ${user.lastName} successfully signed up`);
-              })
-              .catch(err => {
-                console.log(err);
-                this.props.history.push("/forbidden");
-              })
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          this.props.history.push("/error");
-        });
-    } else {
-      throw new Error("Password not confirmed - please ensure passwords match");
-    }
+      .catch(err => {
+        console.log(err);
+        this.props.history.push("/error");
+      });
   }
 
   render() {
+    let id = 1;
+    console.log(this.state.isConfirmed);
     return (
       <div className="bounds">
         <div className="grid-33 centered signin">
           <h1>Sign Up</h1>
+          {
+            (this.state.errors.length > 0) &&
+            <div>
+              <h2 className="validation--errors--label">Validation errors</h2>
+              <div className="validation-errors">
+                <ul>
+                  {
+                    this.state.errors.map(error => {
+                      return (<li key={id++}>{error}</li>);
+                    })
+                  }
+                  {
+                    (!this.state.isConfirmed) && <li>Passwords must match for confirmation</li>
+                  }
+                </ul>
+              </div>
+            </div>
+          }
           <div>
             <form onSubmit={this.handleSubmit}>
               <div>
