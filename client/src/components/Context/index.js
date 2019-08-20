@@ -25,7 +25,8 @@ export class Provider extends Component {
         return errorMessages;
       });
     } else {
-      throw new Error("There was an error in the sign-up process -- signUp Provider method");
+      console.log("There was an error in the sign-up process");
+      this.props.history.push("/error");
     }
   }
 
@@ -43,7 +44,8 @@ export class Provider extends Component {
     } else if(user.status === 401) {
       return null;
     } else {
-      throw new Error("There was an error in the sign-in process -- signIn Provider method");
+      console.log("There was an error in the sign-in process");
+      this.props.history.push("/error");
     }
   }
 
