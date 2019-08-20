@@ -10,14 +10,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'Course.title property is required' },
+        notEmpty: { msg: `'Title' field requires input` },
       },
     },
     description: {
       type: DataTypes.TEXT,
       allowNull: false,
       validate: {
-        notEmpty: { msg: 'Course.description property is required' },
+        notEmpty: { msg: `'Description' field requires input` },
       },
     },
     estimatedTime: {
