@@ -21,7 +21,8 @@ export class Provider extends Component {
       return [];
     } else if(response.status === 400) {
       return response.json().then(data => {
-        return data.errors;
+        const errorMessages = data.message.split(",");
+        return errorMessages;
       });
     } else {
       throw new Error("There was an error in the sign-up process -- signUp Provider method");
