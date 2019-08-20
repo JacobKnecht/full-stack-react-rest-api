@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import config from '../config';
 
 class CreateCourse extends Component {
@@ -7,11 +8,12 @@ class CreateCourse extends Component {
     description: "",
     estimatedTime: "",
     materialsNeeded: "",
+    errors: [],
   };
 
   returnToList = (e) => {
     e.preventDefault();
-    window.location.assign("/");
+    this.props.history.push("/");
   }
 
   updateCourseTitle = (e) => {
@@ -57,6 +59,10 @@ class CreateCourse extends Component {
     if(response.status === 201) {
       this.props.history.push("/");
       console.log("Course Created");
+    } else if(response.status === 400) {
+      const data = await response.json();
+      this.setState({ errors: data.message.split(",") });
+      //const errorMessages = data.message.split(",");
     } else {
       console.log(response);
       console.log(response.status);
@@ -65,20 +71,26 @@ class CreateCourse extends Component {
   }
 
   render() {
+    let id = 1;
     return (
       <div className="bounds course--detail">
         <h1>Create Course</h1>
         <div>
-          {/*Need to find a way to dynamically render the validation renders only when user submits form*/}
-          <div>
-            <h2 className="validation--errors--label">Validation errors</h2>
-            <div className="validation-errors">
-              <ul>
-                <li>Please provide a value for "Title"</li>
-                <li>Please provide a value for "Description"</li>
-              </ul>
+          {
+            (this.state.errors.length > 0) &&
+            <div>
+              <h2 className="validation--errors--label">Validation errors</h2>
+              <div className="validation-errors">
+                <ul>
+                  {
+                    (this.state.errors.map(error => {
+                      return (<li key={id++}>{error}</li>);
+                    }))
+                  }
+                </ul>
+              </div>
             </div>
-          </div>
+          }
           <form onSubmit={this.handleSubmit}>
             <div className="grid-66">
               <div className="course--header">
@@ -134,4 +146,4 @@ class CreateCourse extends Component {
   }
 }
 
-export default CreateCourse;
+export default withRouter(CreateCourse);
