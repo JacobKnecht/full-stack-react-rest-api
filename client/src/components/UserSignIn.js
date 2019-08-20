@@ -31,7 +31,6 @@ class UserSignIn extends Component {
           user.password = this.state.password;
           context.actions.setAuthenticatedUser(user);
           this.props.history.push(from);
-          console.log(`${this.state.emailAddress} successfully signed in`);
         } else {
           this.props.history.push("/forbidden");
         }
