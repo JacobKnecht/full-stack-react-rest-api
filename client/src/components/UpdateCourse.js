@@ -80,8 +80,8 @@ class UpdateCourse extends Component {
     } else if(response.status === 400) {
       const data = await response.json();
       this.setState({ errors: data.message.split(",") });
-    } else {
-      this.props.history.push("/forbidden");
+    } else if(response.status === 500) {
+      this.props.history.push("/error");
     }
   }
 
