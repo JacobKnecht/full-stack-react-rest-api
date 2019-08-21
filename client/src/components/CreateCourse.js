@@ -61,13 +61,15 @@ class CreateCourse extends Component {
     } else if(response.status === 400) {
       const data = await response.json();
       this.setState({ errors: data.message.split(",") });
-    } else {
+    } else if(response.status === 500) {
       this.props.history.push("/error");
     }
   }
 
   render() {
     let id = 1;
+    const { context } = this.props;
+    const authUser = context.authenticatedUser;
     return (
       <div className="bounds course--detail">
         <h1>Create Course</h1>
@@ -98,7 +100,7 @@ class CreateCourse extends Component {
                     onChange={this.updateCourseTitle}/>
                 </div>
                 {/*Need to put authenticated user's name in the following <p> tag*/}
-                <p>By Enter Name</p>
+                <p>By {authUser.firstName} {authUser.lastName}</p>
               </div>
               <div className="course--description">
                 <div>

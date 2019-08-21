@@ -24,7 +24,7 @@ export class Provider extends Component {
         const errorMessages = data.message.split(",");
         return errorMessages;
       });
-    } else {
+    } else if(response.status === 500) {
       this.props.history.push("/error");
     }
   }
@@ -42,7 +42,7 @@ export class Provider extends Component {
       return user.json().then(data => data);
     } else if(user.status === 401) {
       return null;
-    } else {
+    } else if(user.status === 500) {
       this.props.history.push("/error");
     }
   }
