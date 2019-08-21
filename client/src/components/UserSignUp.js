@@ -60,7 +60,6 @@ class UserSignUp extends Component {
           context.actions.signIn(emailAddress, password)
             .then(user => {
               this.props.history.push("/");
-              console.log(`${user.firstName} ${user.lastName} successfully signed up`);
             })
             .catch(err => {
               console.log(err);
