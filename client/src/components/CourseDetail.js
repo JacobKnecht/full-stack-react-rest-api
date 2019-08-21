@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import ReactMarkdown from 'react-markdown';
 
 class CourseDetail extends Component {
   state = {
@@ -67,7 +68,7 @@ class CourseDetail extends Component {
               <p></p>
             </div>
             <div className="course--description">
-              <p>{this.state.course.description}</p>
+              <ReactMarkdown source={this.state.course.description} />
             </div>
           </div>
           <div className="grid-25 grid-right">
@@ -81,7 +82,7 @@ class CourseDetail extends Component {
                   <h4>Materials Needed</h4>
                   <ul>
                     {/*Need to find a way to break down materials needed lists*/}
-                    <li>{this.state.course.materialsNeeded}</li>
+                    <ReactMarkdown source={this.state.course.materialsNeeded} />
                   </ul>
                 </li>
               </ul>
