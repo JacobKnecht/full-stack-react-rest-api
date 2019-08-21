@@ -23,13 +23,22 @@ class CourseDetail extends Component {
   }
 
   handleDelete = () => {
-    const options = { method: "DELETE" };
+    const { context } = this.props;
+    const authUser = context.authenticatedUser;
+    const credentials = btoa(`${authUser.emailAddress}:${authUser.password}`);
+    const options = {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Authorization': `Basic ${credentials}`,
+      },
+    };
     fetch(`${this.props.baseURL}/courses/${this.state.course.id}`, options)
       .then(response => {
         if(response.status === 401) {
           this.props.history.push("/forbidden");
         } else {
-          console.log(`Course ${this.state.course.title} successfully deleted`);
+          this.props.history.push("/");
         }
       })
       .catch(err => {
