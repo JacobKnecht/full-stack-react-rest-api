@@ -10,6 +10,7 @@ class CourseDetail extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props);
     fetch(`${this.props.baseURL}/courses/${this.props.match.params.id}`)
       .then(response => response.json())
       .then(course => this.setState({
@@ -22,7 +23,8 @@ class CourseDetail extends Component {
       })
   }
 
-  handleDelete = () => {
+  handleDelete = (e) => {
+    e.preventDefault();
     const { context } = this.props;
     const authUser = context.authenticatedUser;
     const credentials = btoa(`${authUser.emailAddress}:${authUser.password}`);
@@ -74,7 +76,7 @@ class CourseDetail extends Component {
             <div className="course--header">
               <h4 className="course--label">Course</h4>
               <h3 className="course--title">{this.state.course.title}</h3>
-              <p></p>
+              <p>By {this.state.course.user.firstName} {this.state.course.user.lastName}</p>
             </div>
             <div className="course--description">
               <ReactMarkdown source={this.state.course.description} />
