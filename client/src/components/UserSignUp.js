@@ -52,6 +52,7 @@ class UserSignUp extends Component {
     e.preventDefault();
     const { context } = this.props;
     const { firstName, lastName, emailAddress, password } = this.state;
+    const { from } = this.props.location.state || { from: { pathname: "/" } };
     context.actions.signUp({ firstName, lastName, emailAddress, password })
       .then(errors => {
         if(errors.length) {
@@ -59,7 +60,9 @@ class UserSignUp extends Component {
         } else {
           context.actions.signIn(emailAddress, password)
             .then(user => {
-              this.props.history.push("/");
+              user.password = password;
+              context.actions.setAuthenticatedUser(user);
+              this.props.history.push(from);
             })
             .catch(err => {
               console.log(err);
@@ -75,7 +78,6 @@ class UserSignUp extends Component {
 
   render() {
     let id = 1;
-    console.log(this.state.isConfirmed);
     return (
       <div className="bounds">
         <div className="grid-33 centered signin">
