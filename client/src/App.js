@@ -77,6 +77,7 @@ class App extends Component {
               {/*Forbidden/Unauthorized Route*/}
               <Route path="/forbidden" component={Forbidden} />
               {/*404/Not Found Route*/}
+              <Route path="/notfound" component={NotFound}/>
               <Route component={NotFound} />
             </Switch>
           </div>

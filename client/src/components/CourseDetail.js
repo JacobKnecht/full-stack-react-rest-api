@@ -19,6 +19,7 @@ class CourseDetail extends Component {
       }))
       .catch(err => {
         console.log(err);
+        console.log(err.status);
         this.props.history.push("/error");
       })
   }
