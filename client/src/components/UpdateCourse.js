@@ -16,7 +16,13 @@ class UpdateCourse extends Component {
 
   componentDidMount() {
     fetch(`${config.baseURL}/courses/${this.props.match.params.id}`)
-      .then(response => response.json())
+      .then(response => {
+        if(response.status === 404) {
+          this.props.history.push("/notfound");
+        } else {
+          return response.json();
+        }
+      })
       .then(course => this.setState({
         id: course[0].id,
         title: course[0].title,
@@ -33,7 +39,6 @@ class UpdateCourse extends Component {
       })
       .catch(err => {
         console.log(err);
-        console.log(err.status);
         this.props.history.push("/error");
       })
   }

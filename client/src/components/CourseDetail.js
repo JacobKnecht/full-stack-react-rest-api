@@ -11,19 +11,22 @@ class CourseDetail extends Component {
 
   componentDidMount() {
     fetch(`${this.props.baseURL}/courses/${this.props.match.params.id}`)
-      .then(response => response.json())
+      .then(response => {
+        console.log(response.status);
+        if(response.status === 404) {
+          console.log("inside proper condition");
+          this.props.history.push("/notfound");
+        } else {
+          return response.json();
+        }
+      })
       .then(course => this.setState({
         course: course[0],
         isLoading: false
       }))
       .catch(err => {
-        console.log(err);
-        console.log(err.status);
-        if(err.status === 404) {
-          this.props.history.push("/notfound");
-        } else {
-          this.props.history.push("/error");
-        }
+        console.log(err);;
+        this.props.history.push("/error");
       })
   }
 
