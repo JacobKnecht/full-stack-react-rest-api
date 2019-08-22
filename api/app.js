@@ -167,6 +167,10 @@ app.get('/api/courses/:id', asyncHandler(async (req, res) => {
         },
       ],
     });
+    //checks if the resources does not exist
+    if(course.length === 0) {
+      res.status(404).json({});
+    }
     res.json(course);
   })
 );
@@ -184,6 +188,10 @@ app.post('/api/courses', authenticateUser, asyncHandler(async (req, res) => {
 //'PUT/api/courses/:id 204' - updates a course and returns no content
 app.put('/api/courses/:id', authenticateUser, asyncHandler(async (req, res, next) => {
     let course = await Course.findByPk(req.params.id);
+    //checks if the resources does not exist
+    if(course.length === 0) {
+      res.status(404).json({});
+    }
     //check to ensure that authenticated user is the owner of the course
     if(course.userId === req.body.userId) {
       course.title = req.body.title;

@@ -15,7 +15,6 @@ class UpdateCourse extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props);
     fetch(`${config.baseURL}/courses/${this.props.match.params.id}`)
       .then(response => response.json())
       .then(course => this.setState({

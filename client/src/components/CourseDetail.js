@@ -10,7 +10,6 @@ class CourseDetail extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props);
     fetch(`${this.props.baseURL}/courses/${this.props.match.params.id}`)
       .then(response => response.json())
       .then(course => this.setState({
@@ -20,7 +19,11 @@ class CourseDetail extends Component {
       .catch(err => {
         console.log(err);
         console.log(err.status);
-        this.props.history.push("/error");
+        if(err.status === 404) {
+          this.props.history.push("/notfound");
+        } else {
+          this.props.history.push("/error");
+        }
       })
   }
 
