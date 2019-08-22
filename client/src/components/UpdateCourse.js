@@ -9,11 +9,13 @@ class UpdateCourse extends Component {
     description: "",
     estimatedTime: "",
     materialsNeeded: "",
+    user: {},
     isLoading: true,
     errors: [],
   };
 
   componentDidMount() {
+    console.log(this.props);
     fetch(`${config.baseURL}/courses/${this.props.match.params.id}`)
       .then(response => response.json())
       .then(course => this.setState({
@@ -22,8 +24,14 @@ class UpdateCourse extends Component {
         description: course[0].description,
         estimatedTime: course[0].estimatedTime,
         materialsNeeded: course[0].materialsNeeded,
+        user: course[0].user,
         isLoading: false
       }))
+      .then(() => {
+        if(this.state.user.id !== this.props.context.authenticatedUser.id) {
+          this.props.history.push("/forbidden");
+        }
+      })
       .catch(err => {
         console.log(err);
         this.props.history.push("/error");
@@ -87,7 +95,6 @@ class UpdateCourse extends Component {
 
   render() {
     let id = 1;
-    const { firstName, lastName} = this.props.context.authenticatedUser;
     return (
       this.state.isLoading ? (<h2>Loading Course Information...</h2>) :
       <div className="bounds course--detail">
@@ -118,7 +125,7 @@ class UpdateCourse extends Component {
                     placeholder="Course title..." value={this.state.title}
                     onChange={this.updateCourseTitle} />
                 </div>
-                <p>By {firstName} {lastName}</p>
+                <p>By {this.state.user.firstName} {this.state.user.lastName}</p>
               </div>
               <div className="course--description">
                 <div>
