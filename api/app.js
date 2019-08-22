@@ -169,9 +169,9 @@ app.get('/api/courses/:id', asyncHandler(async (req, res) => {
     });
     //checks if the resources does not exist
     if(course.length === 0) {
-      res.status(404).json({});
+      return res.status(404).json({});
     }
-    res.json(course);
+    return res.json(course);
   })
 );
 
@@ -190,7 +190,7 @@ app.put('/api/courses/:id', authenticateUser, asyncHandler(async (req, res, next
     let course = await Course.findByPk(req.params.id);
     //checks if the resources does not exist
     if(course.length === 0) {
-      res.status(404).json({});
+      return res.status(404).json({});
     }
     //check to ensure that authenticated user is the owner of the course
     if(course.userId === req.body.userId) {
@@ -200,7 +200,7 @@ app.put('/api/courses/:id', authenticateUser, asyncHandler(async (req, res, next
       course.materialsNeeded = req.body.materialsNeeded;
       //Course model validations will ensure that required data is provided
       course = await course.save();
-      res.status(204).end();
+      return res.status(204).end();
     } else {
       //users may not update courses that they do not own
       const err = new Error('Forbidden');
