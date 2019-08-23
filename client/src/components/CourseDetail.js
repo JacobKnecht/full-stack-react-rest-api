@@ -4,30 +4,38 @@ import { withRouter } from 'react-router';
 import ReactMarkdown from 'react-markdown';
 
 class CourseDetail extends Component {
+  _isMounted = false;
+
   state = {
     course: "",
     isLoading: true,
   };
 
   componentDidMount() {
+    this._isMounted = true;
     fetch(`${this.props.baseURL}/courses/${this.props.match.params.id}`)
       .then(response => {
-        console.log(response.status);
         if(response.status === 404) {
-          console.log("inside proper condition");
           this.props.history.push("/notfound");
-        } else {
-          return response.json();
+        }
+        return response.json();
+      })
+      .then(course => {
+        if(this._isMounted) {
+          this.setState({
+            course: course[0],
+            isLoading: false
+          })
         }
       })
-      .then(course => this.setState({
-        course: course[0],
-        isLoading: false
-      }))
       .catch(err => {
-        console.log(err);;
+        console.log(err);
         this.props.history.push("/error");
       })
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   handleDelete = (e) => {

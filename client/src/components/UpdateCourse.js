@@ -3,6 +3,8 @@ import { withRouter } from 'react-router';
 import config from '../config';
 
 class UpdateCourse extends Component {
+  _isMounted = false;
+
   state = {
     id: "",
     title: "",
@@ -15,32 +17,42 @@ class UpdateCourse extends Component {
   };
 
   componentDidMount() {
+    this._isMounted = true;
     fetch(`${config.baseURL}/courses/${this.props.match.params.id}`)
       .then(response => {
         if(response.status === 404) {
           this.props.history.push("/notfound");
-        } else {
-          return response.json();
+        }
+        return response.json();
+      })
+      .then(course => {
+        if(this._isMounted) {
+          this.setState({
+            id: course[0].id,
+            title: course[0].title,
+            description: course[0].description,
+            estimatedTime: course[0].estimatedTime,
+            materialsNeeded: course[0].materialsNeeded,
+            user: course[0].user,
+            isLoading: false
+          })
         }
       })
-      .then(course => this.setState({
-        id: course[0].id,
-        title: course[0].title,
-        description: course[0].description,
-        estimatedTime: course[0].estimatedTime,
-        materialsNeeded: course[0].materialsNeeded,
-        user: course[0].user,
-        isLoading: false
-      }))
       .then(() => {
-        if(this.state.user.id !== this.props.context.authenticatedUser.id) {
-          this.props.history.push("/forbidden");
+        if(this._isMounted) {
+          if(this.state.user.id !== this.props.context.authenticatedUser.id) {
+            this.props.history.push("/forbidden");
+          }
         }
       })
       .catch(err => {
         console.log(err);
         this.props.history.push("/error");
       })
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   returnToList = (e) => {
