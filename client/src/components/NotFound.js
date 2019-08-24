@@ -1,5 +1,6 @@
 import React from 'react';
 
+//render a simple error message for requests for non-existent resources
 const NotFound = () => {
   return (
     <div className="bounds">

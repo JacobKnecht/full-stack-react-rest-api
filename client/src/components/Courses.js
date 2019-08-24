@@ -9,15 +9,17 @@ class Courses extends Component {
   };
 
   componentDidMount() {
+    //attempt to fetch course list
     fetch(`${this.props.baseURL}/courses`)
       .then(response => response.json())
       .then(courses => this.setState({
-        courses: courses,
-        isLoading: false
+        courses: courses, //set course state
+        isLoading: false //no longer loading
       }))
-      .catch(err => this.props.history.push("/error"));
+      .catch(err => this.props.history.push("/error")); //there was an error, likely a server error
   }
 
+  //render the list of courses
   render() {
     return (
       this.state.isLoading ? (<h2>Loading Courses...</h2>) :

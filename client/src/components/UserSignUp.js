@@ -13,69 +13,83 @@ class UserSignUp extends Component {
     errors: [],
   };
 
+  //redirect the user to the course list
   returnToList = (e) => {
     e.preventDefault();
     this.props.history.push("/");
   }
 
+  //update the user first name state
   updateUserFirstName = (e) => {
     this.setState({ firstName: e.target.value });
   }
 
+  //update the user last name state
   updateUserLastName = (e) => {
     this.setState({ lastName: e.target.value });
   }
 
+  //update the user email address state
   updateUserEmailAddress = (e) => {
     this.setState({ emailAddress: e.target.value });
   }
 
+  //update the user password state
   updateUserPassword = async (e) => {
     await this.setState({ password: e.target.value });
+    //check if current password state matches the password confirmation state
     if(this.state.confirmationPassword === this.state.password) {
-      this.setState({ isConfirmed: true });
+      this.setState({ isConfirmed: true }); //if true then password is confirmed
     } else {
-      this.setState({ isConfirmed: false });
+      this.setState({ isConfirmed: false }); //if false password is not confirmed
     }
   }
 
+  //confirm the user's password
   updateConfirmationPassword = async (e) => {
+    //update the password confirmation state
     await this.setState({ confirmationPassword: e.target.value });
+    //check if current password confirmation state matches the password state
     if(this.state.confirmationPassword === this.state.password) {
-      this.setState({ isConfirmed: true });
+      this.setState({ isConfirmed: true }); //if true then password is confirmed
     } else {
-      this.setState({ isConfirmed: false });
+      this.setState({ isConfirmed: false }); //if false password is not confirmed
     }
   }
 
+  //submit handler
   handleSubmit = (e) => {
     e.preventDefault();
+    //obtain user state, and previous route location
     const { context } = this.props;
     const { firstName, lastName, emailAddress, password } = this.state;
     const { from } = this.props.location.state || { from: { pathname: "/" } };
+    //attempt to sign the user up to the site
     context.actions.signUp({ firstName, lastName, emailAddress, password })
       .then(errors => {
         if(errors.length) {
-          this.setState({ errors });
+          this.setState({ errors }); //there was an error, set the error state to validation errors
         } else {
+          //if the user is signed up successfully, automatically sign them in to the site
           context.actions.signIn(emailAddress, password)
             .then(user => {
               user.password = password;
-              context.actions.setAuthenticatedUser(user);
-              this.props.history.push(from);
+              context.actions.setAuthenticatedUser(user); //set the user state to the global authenticated user state
+              this.props.history.push(from); //redirect the user to the route they previously visited
             })
             .catch(err => {
               console.log(err);
-              this.props.history.push("/forbidden");
+              this.props.history.push("/forbidden"); //the user is unauthorized
             })
         }
       })
       .catch(err => {
         console.log(err);
-        this.props.history.push("/error");
+        this.props.history.push("/error"); //there was an error, likely a server error
       });
   }
 
+  //render a sign-up form
   render() {
     let id = 1;
     return (

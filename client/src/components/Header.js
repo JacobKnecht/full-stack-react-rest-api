@@ -3,8 +3,11 @@ import { NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
 const Header = (props) => {
+  //obtain authenticated user state
   const { context } = props;
   const authUser = context.authenticatedUser;
+
+  //render header
   return (
     <div className="header">
       <div className="bounds">

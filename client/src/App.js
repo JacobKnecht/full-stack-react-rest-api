@@ -1,7 +1,9 @@
+//import statements for React, React Router DOM and the config file
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import config from './config';
 
+//import statements for project components
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CreateCourse from './components/CreateCourse';
@@ -14,9 +16,11 @@ import UnhandledError from './components/UnhandledError';
 import Forbidden from './components/Forbidden';
 import NotFound from './components/NotFound';
 
-import { Provider } from './components/Context';
+//import statement for private/protected routes higher-order component
 import PrivateRoute from './PrivateRoute';
 
+//import statements for providing global state/application context
+import { Provider } from './components/Context';
 import withContext from './components/Context';
 const HeaderWithContext = withContext(Header);
 const CreateCourseWithContext = withContext(CreateCourse);
@@ -28,9 +32,10 @@ const UserSignOutWithContext = withContext(UserSignOut);
 
 class App extends Component {
   state = {
-    baseURL: config.baseURL,
+    baseURL: config.baseURL, //store base URL for API in state
   }
 
+  //manage other components, <App> is the main container component
   render() {
     return (
       <Provider>

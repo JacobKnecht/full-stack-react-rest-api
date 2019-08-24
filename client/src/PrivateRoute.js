@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { Consumer } from './components/Context';
 
+//provide a higher-order component to ensure that users are authenticated before
+//permitting access to protected routes
 const PrivateRoute = (props) => {
   const {
     component: Component,

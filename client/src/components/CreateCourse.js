@@ -11,30 +11,37 @@ class CreateCourse extends Component {
     errors: [],
   };
 
+  //redirects the user to the course list
   returnToList = (e) => {
     e.preventDefault();
     this.props.history.push("/");
   }
 
+  //update course title state
   updateCourseTitle = (e) => {
     this.setState({ title: e.target.value });
   }
 
+  //update course description state
   updateCourseDescription = (e) => {
     this.setState({ description: e.target.value });
   }
 
+  //update course estimated time state
   updateCourseEstimatedTime = (e) => {
     this.setState({ estimatedTime: e.target.value });
   }
 
+  //update course materials needed state
   updateCourseMaterialsNeeded = (e) => {
     this.setState({ materialsNeeded: e.target.value });
   }
 
+  //submit handler
   handleSubmit = async (e) => {
     e.preventDefault();
     const { context } = this.props;
+    //obtain authenticated user state and credentials and course state
     const authUser = context.authenticatedUser;
     const {
       title,
@@ -43,6 +50,7 @@ class CreateCourse extends Component {
       materialsNeeded
     } = this.state;
     const credentials = btoa(`${authUser.emailAddress}:${authUser.password}`);
+    //attempt to create a course via POST request with proper headers and course state info in the request body
     const response = await fetch(`${config.baseURL}/courses`, {
       method: "POST",
       headers: {
@@ -57,15 +65,16 @@ class CreateCourse extends Component {
       }),
     });
     if(response.status === 201) {
-      this.props.history.push("/");
+      this.props.history.push("/"); //successful request
     } else if(response.status === 400) {
       const data = await response.json();
-      this.setState({ errors: data.message.split(",") });
+      this.setState({ errors: data.message.split(",") }); //user made a bad request, likely omitted required fields
     } else if(response.status === 500) {
-      this.props.history.push("/error");
+      this.props.history.push("/error"); //there was an error, likely a server error
     }
   }
 
+  //render course creation form
   render() {
     let id = 1;
     const { context } = this.props;

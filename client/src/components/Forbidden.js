@@ -1,5 +1,6 @@
 import React from 'react';
 
+//render a simple error message for unauthorized users
 const Forbidden = () => {
   return (
     <div className="bounds">
