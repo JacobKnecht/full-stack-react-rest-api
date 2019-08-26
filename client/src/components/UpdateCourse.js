@@ -62,9 +62,9 @@ class UpdateCourse extends Component {
   }
 
   //redirects user to the course list
-  returnToList = (e) => {
+  returnToDetail = (e) => {
     e.preventDefault();
-    this.props.history.push("/");
+    this.props.history.push(`/courses/${this.props.match.params.id}`);
   }
 
   //update course title state
@@ -197,7 +197,7 @@ class UpdateCourse extends Component {
             </div>
             <div className="grid-100 pad-bottom">
               <button className="button" type="submit">Update Course</button>
-              <button className="button button-secondary" onClick={this.returnToList}>Cancel</button>
+              <button className="button button-secondary" onClick={this.returnToDetail}>Cancel</button>
             </div>
           </form>
         </div>
